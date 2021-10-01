@@ -2,7 +2,7 @@ import { parseEther } from "@ethersproject/units";
 import { ethers } from "ethers";
 import { useState } from "react";
 
-export default function TransferEth({ setError, setSuccess }) {
+export default function TransferEth({ setError, setSuccess, setScreen }) {
   const [address, setAddress] = useState("");
   const [transferAmount, setTransferAmt] = useState(0);
   const [transferInProgress, setProgress] = useState(false);
@@ -34,10 +34,17 @@ export default function TransferEth({ setError, setSuccess }) {
       setProgress(false);
     }
   };
+
+  const backToWallet = () => {
+    setSuccess("");
+    setError("");
+    setScreen("WALLET");
+  };
+
   return (
     <>
       <h3 className="text-center">Transfer ETH to another Account</h3>
-
+      <button onClick={backToWallet}>Back to My Wallet</button>
       <form action="" onSubmit={startPayment}>
         <div className="input-wrapper">
           <label htmlFor="">Recepient Ethereum Address</label>
