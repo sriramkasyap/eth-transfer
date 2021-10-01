@@ -23,7 +23,7 @@ export default function TransferEth({ setError, setSuccess, setScreen }) {
 
       console.log(tx);
       setSuccess(
-        `Tramsaction Completed successfully. Transaction hash: ${tx.hash}`
+        `Transfer Completed successfully. Transaction hash: ${tx.hash}`
       );
       setAddress("");
       setTransferAmt(0);
