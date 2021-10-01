@@ -1,6 +1,6 @@
 import { formatEther } from "@ethersproject/units";
 import { ethers } from "ethers";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function WalletBalance({
   walletConnected,
@@ -9,13 +9,14 @@ export default function WalletBalance({
   setError,
   setScreen,
 }) {
+  const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     const getWalletBalance = async () => {
       try {
         let provider = new ethers.providers.Web3Provider(window.ethereum);
         let accountBalance = await provider.getBalance(walletConnected);
-        console.log(accountBalance);
         setBalance(accountBalance);
+        setLoading(false);
       } catch (e) {
         console.error(e);
         setError(e);
@@ -33,7 +34,7 @@ export default function WalletBalance({
     <>
       <h3 className="text-center">Your Wallet Balance</h3>
       <h1 className="text-center wallet-balance">
-        {formatEther(walletBalance)} ETH
+        {isLoading ? "Loading.." : <>{formatEther(walletBalance)} ETH</>}
       </h1>
 
       <button onClick={goToSendScreen}>Transfer ETH</button>

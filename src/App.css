@@ -5,6 +5,9 @@
 .error-message {
   color: red;
 }
+.success-message {
+  color: green;
+}
 .App {
   text-align: center;
 }
@@ -46,6 +49,9 @@
 
 .input-wrapper {
   margin: 30px 0;
+}
+label {
+  font-size: 14px;
 }
 .form-control {
   font-size: 16px;

@@ -6,6 +6,7 @@ import WalletBalance from "./WalletBalance";
 
 function App() {
   const [errorMessage, setError] = useState("");
+  const [successMessage, setSuccess] = useState("");
   const [walletConnected, setWallet] = useState(false);
   const [walletBalance, setBalance] = useState(0);
   const [currentScreen, setScreen] = useState("CONNECT");
@@ -30,7 +31,11 @@ function App() {
           setScreen={setScreen}
         />
       ) : currentScreen === "TRANSFER" ? (
-        <TransferEth setError={setError} setScreen={setScreen} />
+        <TransferEth
+          setError={setError}
+          setScreen={setScreen}
+          setSuccess={setSuccess}
+        />
       ) : currentScreen === "SUCCESS" ? (
         <TransferSuccess />
       ) : (
@@ -38,6 +43,7 @@ function App() {
       )}
 
       <p className="text-center error-message">{errorMessage}</p>
+      <p className="text-center success-message">{successMessage}</p>
     </div>
   );
 }
