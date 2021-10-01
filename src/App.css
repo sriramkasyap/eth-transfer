@@ -1,3 +1,10 @@
+.text-center {
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+}
 .App {
   text-align: center;
 }
@@ -35,4 +42,19 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.input-wrapper {
+  margin: 30px 0;
+}
+.form-control {
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  display: block;
+  margin: 10px auto;
+  max-width: 500px;
+  text-align: center;
 }
