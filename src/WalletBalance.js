@@ -26,6 +26,18 @@ export default function WalletBalance({
     getWalletBalance();
   }, [walletConnected, setBalance, setError]);
 
+  const refreshBalance = async () => {
+    try {
+      let provider = new ethers.providers.Web3Provider(window.ethereum);
+      let accountBalance = await provider.getBalance(walletConnected);
+      setBalance(accountBalance);
+      setLoading(false);
+    } catch (e) {
+      console.error(e);
+      setError(e);
+    }
+  };
+
   const goToSendScreen = (e) => {
     setScreen("TRANSFER");
   };
@@ -37,6 +49,9 @@ export default function WalletBalance({
         {isLoading ? "Loading.." : <>{formatEther(walletBalance)} ETH</>}
       </h1>
 
+      <button onClick={refreshBalance}>Refresh Balance</button>
+      <br />
+      <br />
       <button onClick={goToSendScreen}>Transfer ETH</button>
     </>
   );
