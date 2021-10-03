@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import ConnectWallet from "./ConnectWallet";
+import TransferDAI from "./TransferDAI";
 import TransferEth from "./TransferEth";
 import WalletBalance from "./WalletBalance";
 
@@ -14,7 +15,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="text-center main-heading">ETH Transfer</h1>
+      <h1 className="text-center main-heading">Token Transfer App</h1>
       {currentScreen === "CONNECT" ? (
         <ConnectWallet
           setError={setError}
@@ -35,6 +36,13 @@ function App() {
           setError={setError}
           setScreen={setScreen}
           setSuccess={setSuccess}
+        />
+      ) : currentScreen === "TRANSFERDAI" ? (
+        <TransferDAI
+          setError={setError}
+          setScreen={setScreen}
+          setSuccess={setSuccess}
+          walletConnected={walletConnected}
         />
       ) : currentScreen === "SUCCESS" ? (
         <TransferSuccess />

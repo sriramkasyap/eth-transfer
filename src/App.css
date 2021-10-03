@@ -64,3 +64,7 @@ label {
   max-width: 500px;
   text-align: center;
 }
+
+.wallet-balance {
+  color: #3c3c3d;
+}
