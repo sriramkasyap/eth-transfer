@@ -33,6 +33,8 @@ export default function TransferDAI({
       }
 
       let tx = await erc20_rw.transfer(address, parseEther(transferAmount));
+
+      console.log(tx);
       setSuccess(
         `Transfer Completed successfully.\n Transaction hash: ${tx.hash}`
       );
