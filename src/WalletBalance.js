@@ -76,6 +76,9 @@ export default function WalletBalance({
       <br />
       <button onClick={() => setScreen("TRANSFER")}>Transfer ETH</button>
       <button onClick={() => setScreen("TRANSFERDAI")}>Transfer DAI</button>
+      <button onClick={() => setScreen("TRANSFER_MULTISIG")}>
+        Transfer DAI from MultiSig Wallet
+      </button>
     </>
   );
 }

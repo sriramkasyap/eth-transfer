@@ -3,6 +3,7 @@ import "./App.css";
 import ConnectWallet from "./ConnectWallet";
 import TransferDAI from "./TransferDAI";
 import TransferEth from "./TransferEth";
+import TransferMultiSig from "./TransferMultiSig";
 import WalletBalance from "./WalletBalance";
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
   const [walletConnected, setWallet] = useState(false);
   const [walletBalance, setBalance] = useState(0);
   const [currentScreen, setScreen] = useState("CONNECT");
-  // CONNECT, WALLET, TRANSFER, SUCCESS
+  // CONNECT, WALLET, TRANSFER, TRANSFERDAI, TRANSFER_MULTISIG
 
   return (
     <div className="App">
@@ -39,6 +40,13 @@ function App() {
         />
       ) : currentScreen === "TRANSFERDAI" ? (
         <TransferDAI
+          setError={setError}
+          setScreen={setScreen}
+          setSuccess={setSuccess}
+          walletConnected={walletConnected}
+        />
+      ) : currentScreen === "TRANSFER_MULTISIG" ? (
+        <TransferMultiSig
           setError={setError}
           setScreen={setScreen}
           setSuccess={setSuccess}
