@@ -105,7 +105,7 @@ export default function TransferMultiSig({
             className="form-control"
             type="text"
             placeholder={'Starts with "0x"'}
-            value={address}
+            value={multiSigAddress}
             onChange={(e) => setMultiSigAddress(e.target.value)}
           />
         </div>
