@@ -11,8 +11,19 @@ export default function WalletBalance({
   setScreen,
 }) {
   const [isLoading, setLoading] = useState(true);
+  const [message, setMessage] = useState("Login to Parcel");
+  const [signedMessage, setSignedMessage] = useState();
 
   const [daiBalance, setDaiBalance] = useState(0);
+
+  const generateSignedMessage = async (e) => {
+    e.preventDefault();
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer = await provider.getSigner();
+    let signed = await signer.signMessage(message);
+
+    setSignedMessage(signed);
+  };
   useEffect(() => {
     const getWalletBalance = async () => {
       try {
@@ -63,6 +74,7 @@ export default function WalletBalance({
   return (
     <>
       <h3 className="text-center">Your Wallet Balance</h3>
+      <p>{walletConnected}</p>
       <h1 className="text-center wallet-balance">
         {isLoading ? "Loading.." : <>{formatEther(walletBalance)} ETH</>}
       </h1>
@@ -79,6 +91,16 @@ export default function WalletBalance({
       <button onClick={() => setScreen("TRANSFER_MULTISIG")}>
         Transfer DAI from MultiSig Wallet
       </button>
+
+      <form onSubmit={generateSignedMessage}>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <button type="submit">Generate Signature</button>
+        <p>{signedMessage}</p>
+      </form>
     </>
   );
 }
