@@ -13,6 +13,7 @@ export default function WalletBalance({
   const [isLoading, setLoading] = useState(true);
   const [message, setMessage] = useState("Login to Parcel");
   const [signedMessage, setSignedMessage] = useState();
+  const [AuthObject, setAuthObject] = useState({});
 
   const [daiBalance, setDaiBalance] = useState(0);
 
@@ -23,6 +24,18 @@ export default function WalletBalance({
     let signed = await signer.signMessage(message);
 
     setSignedMessage(signed);
+  };
+
+  const generateAuthObject = async (e) => {
+    e.preventDefault();
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer = await provider.getSigner();
+    let auth_msg = `Allow third party app to access your data on Parcel ${Date.now()}`;
+    let signed = await signer.signMessage(auth_msg);
+
+    setAuthObject({
+      auth: { walletAddress: walletConnected, auth_msg, signature: signed },
+    });
   };
   useEffect(() => {
     const getWalletBalance = async () => {
@@ -101,6 +114,33 @@ export default function WalletBalance({
         <button type="submit">Generate Signature</button>
         <p>{signedMessage}</p>
       </form>
+
+      <button onClick={generateAuthObject} type="submit">
+        Generate Auth Object
+      </button>
+      <pre
+        style={{
+          display: "block",
+          border: "1px solid black",
+          maxWidth: 600,
+          margin: "20px auto",
+          padding: "20px",
+          backgroundColor: "#ccc",
+          lineHeight: 1.5,
+          color: "#444",
+          textAlign: "left",
+          fontSize: 13,
+          overflowX: "scroll",
+        }}
+      >
+        <code
+          style={{
+            maxWidth: "100%",
+          }}
+        >
+          {JSON.stringify(AuthObject, null, 4)}
+        </code>
+      </pre>
     </>
   );
 }
