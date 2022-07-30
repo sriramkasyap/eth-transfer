@@ -1,6 +1,6 @@
 import { formatEther } from "@ethersproject/units";
-import { ethers } from "ethers";
-import { useEffect, useState } from "react";
+import { Contract, ethers } from "ethers";
+import { useCallback, useEffect, useState } from "react";
 import { DAI_ABI, DAI_ADDRESS } from "./daiCOnfig";
 
 export default function WalletBalance({
@@ -14,8 +14,44 @@ export default function WalletBalance({
   const [message, setMessage] = useState("Login to Parcel");
   const [signedMessage, setSignedMessage] = useState();
   const [AuthObject, setAuthObject] = useState({});
+  const [avatar, setAvatar] = useState();
 
   const [daiBalance, setDaiBalance] = useState(0);
+
+  async function resolveName(address) {
+    // const provider = new StaticJsonRpcProvider('https://brovider.xyz/1');
+    let provider = new ethers.providers.InfuraProvider(
+      1,
+      "aa209e31f40242e8a1db52ffad10bea6"
+    );
+    const abi = ["function getNames(address[]) view returns (string[])"];
+    const contract = new Contract(
+      "0x3671aE578E63FdF66ad4F3E12CC0c0d71Ac7510C",
+      abi,
+      provider
+    );
+    const names = await contract.getNames([address]);
+    return names[0];
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const resolve = useCallback(async (address) => {
+    try {
+      let provider = new ethers.providers.InfuraProvider(
+        1,
+        "aa209e31f40242e8a1db52ffad10bea6"
+      );
+      const name = await resolveName(address);
+      if (!name) return false;
+      const url = await provider.getAvatar(name);
+      setAvatar(url);
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  });
+
+  useEffect(() => resolve(walletConnected), [walletConnected, resolve]);
 
   const generateSignedMessage = async (e) => {
     e.preventDefault();
@@ -88,6 +124,7 @@ export default function WalletBalance({
     <>
       <h3 className="text-center">Your Wallet Balance</h3>
       <p>{walletConnected}</p>
+      {avatar && <img width={"100px"} src={avatar} alt="" />}
       <h1 className="text-center wallet-balance">
         {isLoading ? "Loading.." : <>{formatEther(walletBalance)} ETH</>}
       </h1>
@@ -101,6 +138,7 @@ export default function WalletBalance({
       <br />
       <button onClick={() => setScreen("TRANSFER")}>Transfer ETH</button>
       <button onClick={() => setScreen("TRANSFERDAI")}>Transfer DAI</button>
+      <button onClick={() => resolve(walletConnected)}>Resolve ENS</button>
       <button onClick={() => setScreen("TRANSFER_MULTISIG")}>
         Transfer DAI from MultiSig Wallet
       </button>
