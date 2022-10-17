@@ -58,8 +58,8 @@ function App() {
         <></>
       )}
 
-      <p className="text-center error-message">{errorMessage}</p>
-      <p className="text-center success-message">{successMessage}</p>
+      <p className="text-center error-message">{errorMessage.toString()}</p>
+      <p className="text-center success-message">{successMessage.toString()}</p>
     </div>
   );
 }

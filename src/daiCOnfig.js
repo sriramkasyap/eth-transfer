@@ -177,4 +177,4 @@ export const DAI_ABI = [
   },
 ];
 
-export const DAI_ADDRESS = "0xc3dbf84abb494ce5199d5d4d815b10ec29529ff8";
+export const DAI_ADDRESS = "0xf2edF1c091f683E3fb452497d9a98A49cBA84666";
